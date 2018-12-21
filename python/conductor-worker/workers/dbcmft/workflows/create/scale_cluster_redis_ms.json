@@ -1,0 +1,29 @@
+{
+  "description": "scale cluster redis ms",
+  "inputParameters": [
+    "image", 
+    "number"
+  ], 
+  "name": "scale_cluster_redis_ms",
+  "outputParameters": {}, 
+  "schemaVersion": 2, 
+  "tasks": [
+    {
+      "inputParameters": {
+        "compose_file": "/root/gitSwarm/dbcm-base-managers/compose/redis.yml",
+        "image": "${workflow.input.image}", 
+        "metadata_script": "/root/gitSwarm/metadata/gen_consul_data_for_redis_ms.py",
+        "number": "${workflow.input.number}", 
+        "service_name": "redis"
+      }, 
+      "name": "scale_cluster", 
+      "subWorkflowParam": {
+        "name": "scale_cluster", 
+        "version": 1
+      }, 
+      "taskReferenceName": "sc", 
+      "type": "SUB_WORKFLOW"
+    }
+  ], 
+  "version": 1
+}

@@ -1,0 +1,29 @@
+{
+  "description": "scale cluster mysql ms", 
+  "inputParameters": [
+    "image", 
+    "number"
+  ], 
+  "name": "scale_cluster_mysql_ms", 
+  "outputParameters": {}, 
+  "schemaVersion": 2, 
+  "tasks": [
+    {
+      "inputParameters": {
+        "compose_file": "/root/gitSwarm/dbcm-base-managers/compose/mysql.yml", 
+        "image": "${workflow.input.image}", 
+        "metadata_script": "/root/gitSwarm/metadata/gen_consul_data_for_mysql_ms.py", 
+        "number": "${workflow.input.number}", 
+        "service_name": "mysql"
+      }, 
+      "name": "scale_cluster", 
+      "subWorkflowParam": {
+        "name": "scale_cluster", 
+        "version": 1
+      }, 
+      "taskReferenceName": "sc", 
+      "type": "SUB_WORKFLOW"
+    }
+  ], 
+  "version": 1
+}

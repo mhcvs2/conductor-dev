@@ -1,0 +1,35 @@
+{
+  "description": "{{ name }}",
+  "inputParameters": [
+    "inputData"
+  ], 
+  "name": "{{ name }}",
+  "outputParameters": {
+    "logs": "${tt.output.logs}", 
+    "primaryIp": "${tt.output.primaryIp}"
+  }, 
+  "schemaVersion": 2, 
+  "tasks": [
+    {
+      "inputParameters": {
+        "inputData": "${workflow.input.inputData}"
+      }, 
+      "name": "test_task", 
+      "taskReferenceName": "tt", 
+      "type": "SIMPLE"
+    }, 
+    {
+      "inputParameters": {
+        "metadata_script": "${workflow.input.metadata_script}"
+      }, 
+      "name": "put_metadata", 
+      "subWorkflowParam": {
+        "name": "put_metadata", 
+        "version": 1
+      }, 
+      "taskReferenceName": "pm", 
+      "type": "SUB_WORKFLOW"
+    }
+  ], 
+  "version": 1
+}

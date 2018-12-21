@@ -1,0 +1,19 @@
+{
+  "outputKeys": [
+    "cluster_id"
+  ], 
+  "updateTime": 0, 
+  "name": "put_metadata", 
+  "timeoutSeconds": 0, 
+  "inputKeys": [
+    "metadata_script", 
+    "random_number"
+  ], 
+  "retryLogic": "FIXED", 
+  "responseTimeoutSeconds": 0, 
+  "retryDelaySeconds": 1, 
+  "retryCount": 10, 
+  "timeoutPolicy": "RETRY", 
+  "concurrentExecLimit": 0, 
+  "description": "put metadata"
+}

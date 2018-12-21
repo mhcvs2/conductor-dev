@@ -1,0 +1,53 @@
+{
+  "description": "scale cluster mysql ms in multi az",
+  "inputParameters": [
+    "image", 
+    "number"
+  ], 
+  "name": "scale_cluster_mysql_ms_maz",
+  "outputParameters": {}, 
+  "schemaVersion": 2, 
+  "tasks": [
+    {
+      "inputParameters": {
+        "compose_file": "/root/gitSwarm/dbcm-base-managers/compose/mysql.yml", 
+        "image": "${workflow.input.image}", 
+        "metadata_script": "/root/gitSwarm/metadata/gen_consul_data_for_mysql_ms.py", 
+        "number": "${workflow.input.number}", 
+        "service_name": "mysql"
+      }, 
+      "name": "scale_cluster", 
+      "subWorkflowParam": {
+        "name": "scale_cluster", 
+        "version": 1
+      }, 
+      "taskReferenceName": "sc", 
+      "type": "SUB_WORKFLOW"
+    }, 
+    {
+      "inputParameters": {
+        "ip": "109.105.4.65", 
+        "key": "${sc.output.cluster_id}/process/PrimaryAZ", 
+        "value": "default"
+      }, 
+      "name": "consul_put_kv", 
+      "taskReferenceName": "cpkv", 
+      "type": "SIMPLE"
+    }, 
+    {
+      "inputParameters": {
+        "cluster_id": "${sc.output.cluster_id}",
+        "compose_file": "/root/gitSwarm/dbcm-base-managers/compose/mysql.yml", 
+        "datacenter": "another-az", 
+        "image": "${workflow.input.image}", 
+        "number": "1", 
+        "service_name": "mysql",
+        "project_name": "${sc.output.cluster_id}maz"
+      }, 
+      "name": "scale_cluster", 
+      "taskReferenceName": "sctt", 
+      "type": "SIMPLE"
+    }
+  ], 
+  "version": 1
+}

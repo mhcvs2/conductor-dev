@@ -1,0 +1,28 @@
+{
+  "description": "scale nodes mysql pxc",
+  "inputParameters": [
+    "cluster_id",
+    "number"
+  ], 
+  "name": "scale_nodes_mysql_pxc",
+  "outputParameters": {}, 
+  "schemaVersion": 2, 
+  "tasks": [
+    {
+      "inputParameters": {
+        "cluster_id": "${workflow.input.cluster_id}",
+        "compose_file": "/root/gitSwarm/dbcm-base-managers/compose/mysql.yml",
+        "number": "${workflow.input.number}", 
+        "service_name": "mysql"
+      }, 
+      "name": "scale_nodes",
+      "subWorkflowParam": {
+        "name": "scale_nodes",
+        "version": 1
+      }, 
+      "taskReferenceName": "sc", 
+      "type": "SUB_WORKFLOW"
+    }
+  ], 
+  "version": 1
+}

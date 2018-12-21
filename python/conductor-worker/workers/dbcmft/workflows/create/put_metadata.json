@@ -1,0 +1,29 @@
+{
+  "tasks": [
+    {
+      "taskReferenceName": "grn", 
+      "type": "SIMPLE", 
+      "name": "gen_random_number", 
+      "inputParameters": {}
+    }, 
+    {
+      "taskReferenceName": "pm", 
+      "type": "SIMPLE", 
+      "name": "put_metadata", 
+      "inputParameters": {
+        "metadata_script": "${workflow.input.metadata_script}", 
+        "random_number": "${grn.output.random_number}"
+      }
+    }
+  ], 
+  "name": "put_metadata", 
+  "outputParameters": {
+    "cluster_id": "${pm.output.cluster_id}"
+  }, 
+  "version": 1, 
+  "inputParameters": [
+    "metadata_script"
+  ], 
+  "schemaVersion": 2, 
+  "description": "put metadata"
+}

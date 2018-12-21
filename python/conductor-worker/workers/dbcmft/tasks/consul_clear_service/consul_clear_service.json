@@ -1,0 +1,18 @@
+{
+  "updateTime": 0, 
+  "concurrentExecLimit": 0, 
+  "name": "consul_clear_service", 
+  "timeoutSeconds": 0, 
+  "inputKeys": [
+    "ip"
+  ], 
+  "retryLogic": "FIXED", 
+  "responseTimeoutSeconds": 0, 
+  "retryDelaySeconds": 1, 
+  "retryCount": 10, 
+  "timeoutPolicy": "RETRY", 
+  "outputKeys": [
+    "clear_services"
+  ], 
+  "description": "consul clear service"
+}

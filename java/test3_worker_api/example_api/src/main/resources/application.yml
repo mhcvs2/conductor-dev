@@ -1,0 +1,5 @@
+server:
+  port: 10011
+
+conductor:
+  serverUrl: http://tx2:8080/api/

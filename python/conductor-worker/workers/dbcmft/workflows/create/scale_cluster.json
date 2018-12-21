@@ -1,0 +1,42 @@
+{
+  "description": "scale cluster", 
+  "inputParameters": [
+    "metadata_script", 
+    "image", 
+    "compose_file", 
+    "service_name", 
+    "number"
+  ], 
+  "name": "scale_cluster", 
+  "outputParameters": {
+    "cluster_id": "${pm.output.cluster_id}"
+  },
+  "schemaVersion": 2, 
+  "tasks": [
+    {
+      "inputParameters": {
+        "metadata_script": "${workflow.input.metadata_script}"
+      }, 
+      "name": "put_metadata", 
+      "subWorkflowParam": {
+        "name": "put_metadata", 
+        "version": 1
+      }, 
+      "taskReferenceName": "pm", 
+      "type": "SUB_WORKFLOW"
+    }, 
+    {
+      "inputParameters": {
+        "cluster_id": "${pm.output.cluster_id}", 
+        "compose_file": "${workflow.input.compose_file}", 
+        "image": "${workflow.input.image}", 
+        "number": "${workflow.input.number}", 
+        "service_name": "${workflow.input.service_name}"
+      }, 
+      "name": "scale_cluster", 
+      "taskReferenceName": "tt", 
+      "type": "SIMPLE"
+    }
+  ], 
+  "version": 1
+}

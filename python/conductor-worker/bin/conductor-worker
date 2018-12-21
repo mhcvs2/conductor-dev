@@ -1,0 +1,160 @@
+#!/usr/bin/python
+# encoding: utf-8
+import os
+import sys
+import json
+import subprocess
+
+# 需要执行的worker的名字，在workers目录下
+worker_group = []
+
+
+# 将path加入PYTHONPATH
+def add_python_path(path):
+    if path not in sys.path:
+        sys.path.append(path)
+
+
+# 从path下寻找一个以.json结尾的文件并转为字典
+# 返回不带后缀的文件民，字典数据
+def get_json(path):
+    for root, dirs, files in os.walk(path):
+        for jf in files:
+            if jf.endswith('.json'):
+                with open(os.path.join(root, jf), 'rb') as f:
+                    try:
+                        return jf.rstrip('.json'), json.load(f)
+                    except ValueError as e:
+                        print("%s's text is not json type" % os.path.join(root, jf))
+                        print('Error: %s' % e.message)
+    return None, None
+
+
+# 读取path下所有以.json结尾的文件，读为workflow的定义
+def get_workflows(path):
+    res = {}
+    for root, dirs, files in os.walk(path):
+        for jf in files:
+            if jf.endswith('.json'):
+                with open(os.path.join(root, jf), 'rb') as f:
+                    try:
+                        res[jf.split('.json')[0]] = json.load(f)
+                    except ValueError as e:
+                        print("%s's text is not json type" % os.path.join(root, jf))
+                        print('Error: %s' % e.message)
+    return res
+
+
+# path 为放入PYTHONPATH的路径， current_path 是其子路径
+# 返回 current_path从左边去掉path， 并将/换为.
+def get_module_path(current_path, path):
+    tmp_path = 't{}'.format(current_path.lstrip(path))
+    return '.'.join(tmp_path.split('/'))
+
+
+def main():
+    this_dir = os.path.abspath(os.path.dirname(__file__))
+    parent_dir = os.path.dirname(this_dir)
+    add_python_path(parent_dir)
+    mworker = os.path.join(parent_dir, 'mworker')
+    add_python_path(mworker)
+    mworker_main = __import__('main', fromlist=mworker)
+    tasks = mworker_main.tasks
+    workflows = mworker_main.workflows
+
+    for w in worker_group:
+        workers_path = os.path.join(parent_dir, 'workers')
+        w_path = os.path.join(workers_path, w)
+        if not os.path.isdir(w_path):
+            print "%s does not exist" % w_path
+            sys.exit(1)
+        add_python_path(workers_path)
+        add_python_path(w_path)
+        for root, dirs, files in os.walk(w_path):
+            if os.path.basename(root) == 'tasks':
+                for d in dirs:
+                    current_path = os.path.join(root, d)
+                    task_name, task_def = get_json(current_path)
+                    if not task_name:
+                        print "task definition is not founded in %s " % current_path
+                        continue
+                    module_path = get_module_path(current_path, w_path)
+                    handler = __import__(module_path, fromlist=w_path)
+                    try:
+                        handler_fun = getattr(handler, task_name)
+                    except AttributeError:
+                        handler = __import__('{}.{}'.format(module_path, task_name),
+                                             fromlist=w_path)
+                        try:
+                            handler_fun = getattr(handler, task_name)
+                        except AttributeError:
+                            print "task handler is not founded in %s " % current_path
+                            continue
+                    task_info = dict(
+                        definition=task_def,
+                        handler=handler_fun
+                    )
+                    tasks[task_name] = task_info
+            elif os.path.basename(root) == 'workflows':
+                workflows.update(get_workflows(root))
+    mworker_main.proxy_main()
+
+
+def list_worker():
+    this_dir = os.path.abspath(os.path.dirname(__file__))
+    parent_dir = os.path.dirname(this_dir)
+    workers_path = os.path.join(parent_dir, 'workers')
+    all_w = os.listdir(workers_path)
+    for w in all_w:
+        if w != 'lib' and w != 'example' and os.path.isdir(os.path.join(workers_path, w)):
+            print '- {}'.format(w)
+
+
+def copy_example(target, action, name=None):
+    example_task = 'test_task'
+    example_workflow = 'test_workflow'
+    this_dir = os.path.abspath(os.path.dirname(__file__))
+    parent_dir = os.path.dirname(this_dir)
+    example_path = os.path.join(parent_dir, 'workers', 'example')
+    target_path = os.path.join(parent_dir, 'workers', target)
+    if not os.path.exists(target_path):
+        os.makedirs(target_path)
+    if action == 'add_task':
+        src_path = os.path.join(example_path, example_task)
+        target_path = '{}/tasks'.format(target_path)
+        subprocess.check_call('cp -r %s %s' % (src_path, target_path), shell=True)
+        new_task_path = os.path.join(target_path, name)
+        os.rename(os.path.join(target_path, example_task), new_task_path)
+        definition = os.path.join(new_task_path, '{}.json'.format(name))
+        handler = os.path.join(new_task_path, '{}.py'.format(name))
+        os.rename(os.path.join(new_task_path, '{}.json'.format(example_task)), definition)
+        os.rename(os.path.join(new_task_path, '{}.py'.format(example_task)), handler)
+        subprocess.check_call('sed -i "s/%s/%s/g" %s' % (example_task, name, definition), shell=True)
+        subprocess.check_call('sed -i "s/%s/%s/g" %s' % (' '.join(example_task.split('_')),
+                                                         ' '.join(name.split('_')),
+                                                         definition), shell=True)
+        subprocess.check_call('sed -i "s/%s/%s/g" %s' % (example_task, name, handler), shell=True)
+
+    elif action == 'add_wf':
+        src_path = os.path.join(example_path, '{}.json'.format(example_workflow))
+        definition = os.path.join(target_path, 'workflows', '{}.json'.format(name))
+        subprocess.check_call('cp %s %s' % (src_path, definition), shell=True)
+        subprocess.check_call('sed -i "s/%s/%s/g" %s' % (example_workflow, name, definition), shell=True)
+        subprocess.check_call('sed -i "s/%s/%s/g" %s' % (' '.join(example_workflow.split('_')),
+                                                         ' '.join(name.split('_')),
+                                                         definition), shell=True)
+
+
+if __name__ == '__main__':
+    if len(sys.argv) == 1:
+        list_worker()
+    elif len(sys.argv) > 3 and sys.argv[2] in ['add_task', 'add_wf']:
+        if len(sys.argv) == 4:
+            name = sys.argv[3]
+        else:
+            print "lack name"
+            sys.exit(1)
+        copy_example(sys.argv[1], sys.argv[2], name)
+    else:
+        worker_group.extend(sys.argv[1:])
+        main()

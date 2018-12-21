@@ -1,0 +1,32 @@
+{
+  "description": "delete cluster", 
+  "inputParameters": [
+    "compose_file", 
+    "cluster_id"
+  ], 
+  "name": "delete_cluster", 
+  "outputParameters": {
+  }, 
+  "schemaVersion": 2, 
+  "tasks": [
+    {
+      "inputParameters": {
+         "compose_file": "${workflow.input.compose_file}",
+         "cluster_id": "${workflow.input.cluster_id}"
+      }, 
+      "name": "stop_cluster", 
+      "taskReferenceName": "sc", 
+      "type": "SIMPLE"
+    }, 
+    {
+      "inputParameters": {
+         "compose_file": "${workflow.input.compose_file}",
+         "cluster_id": "${workflow.input.cluster_id}"
+      }, 
+      "name": "delete_cluster",
+      "taskReferenceName": "dc",
+      "type": "SIMPLE"
+    }
+  ], 
+  "version": 1
+}

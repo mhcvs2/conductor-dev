@@ -1,0 +1,27 @@
+{
+  "description": "scale nodes",
+  "inputParameters": [
+    "cluster_id",
+    "compose_file", 
+    "service_name", 
+    "number"
+  ], 
+  "name": "scale_nodes",
+  "outputParameters": {
+  },
+  "schemaVersion": 2, 
+  "tasks": [
+    {
+      "inputParameters": {
+        "cluster_id": "${workflow.input.cluster_id}",
+        "compose_file": "${workflow.input.compose_file}",
+        "number": "${workflow.input.number}", 
+        "service_name": "${workflow.input.service_name}"
+      }, 
+      "name": "scale_cluster",
+      "taskReferenceName": "tt", 
+      "type": "SIMPLE"
+    }
+  ], 
+  "version": 1
+}

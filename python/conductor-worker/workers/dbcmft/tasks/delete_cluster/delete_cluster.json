@@ -1,0 +1,18 @@
+{
+  "updateTime": 0, 
+  "concurrentExecLimit": 0, 
+  "name": "delete_cluster",
+  "timeoutSeconds": 0, 
+  "inputKeys": [
+    "cluster_id",
+    "compose_file"
+  ], 
+  "retryLogic": "FIXED", 
+  "responseTimeoutSeconds": 0, 
+  "retryDelaySeconds": 1, 
+  "retryCount": 10, 
+  "timeoutPolicy": "RETRY", 
+  "outputKeys": [
+  ], 
+  "description": "delete cluster"
+}

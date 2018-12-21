@@ -1,0 +1,16 @@
+{
+  "outputKeys": [
+    "random_number"
+  ], 
+  "updateTime": 0, 
+  "name": "gen_random_number", 
+  "timeoutSeconds": 0, 
+  "inputKeys": [], 
+  "retryLogic": "FIXED", 
+  "responseTimeoutSeconds": 0, 
+  "retryDelaySeconds": 1, 
+  "retryCount": 10, 
+  "timeoutPolicy": "RETRY", 
+  "concurrentExecLimit": 0, 
+  "description": "gen random number"
+}

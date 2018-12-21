@@ -1,0 +1,22 @@
+{
+  "description": "consul clear service", 
+  "inputParameters": [
+    "ip"
+  ], 
+  "name": "consul_clear_service", 
+  "outputParameters": {
+    "clear_services": "${ccs.output.clear_services}"
+  }, 
+  "schemaVersion": 2, 
+  "tasks": [
+    {
+      "inputParameters": {
+        "ip": "${workflow.input.ip}"
+      }, 
+      "name": "consul_clear_service",
+      "taskReferenceName": "ccs",
+      "type": "SIMPLE"
+    }
+  ], 
+  "version": 1
+}
