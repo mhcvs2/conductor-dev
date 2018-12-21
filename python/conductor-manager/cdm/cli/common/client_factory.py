@@ -6,5 +6,5 @@ CONF = cfg.CONF
 
 
 def get_metadata_client():
-    return MockClient(CONF.conductor.server_url)
-    # return MetadataClient(CONF.conductor.server_url)
+    # return MockClient(CONF.conductor.server_url)
+    return MetadataClient(CONF.conductor.server_url)

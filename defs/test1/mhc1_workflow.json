@@ -1,0 +1,26 @@
+{
+  "description": "mhc1",
+  "inputParameters": [
+    "inputData"
+  ], 
+  "name": "mhc1",
+  "outputParameters": {
+  }, 
+  "schemaVersion": 2, 
+  "tasks": [
+    {
+      "inputParameters": {
+        "inputData": "${workflow.input.inputData}"
+      }, 
+      "name": "mhc1",
+      "taskReferenceName": "mhc1",
+      "type": "SIMPLE"
+    }, 
+    {
+      "name": "mhc2",
+      "taskReferenceName": "mhc2",
+      "type": "SIMPLE"
+    }
+  ], 
+  "version": 1
+}

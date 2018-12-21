@@ -21,7 +21,7 @@ env = build_jinja_environment()
 
 
 class CreateDefFile(BaseApp):
-    """Create workflow/task definition file form template"""
+    """Create workflow definition file form template"""
 
     name = "cw"
     def_type = "workflow"
@@ -42,13 +42,13 @@ class CreateDefFile(BaseApp):
     @classmethod
     def main(cls):
         root = CONF.register_check_path
-        name = CONF.command.def_name
+        def_name = CONF.command.def_name
         sub_path = CONF.command.sub_path
         if sub_path:
             path = os.path.join(root, sub_path)
         else:
             path = root
-        name = "{}_task".format(name) if cls.def_type == "task" else "{}_workflow".format(name)
+        name = "{}_task".format(def_name) if cls.def_type == "task" else "{}_workflow".format(def_name)
         file_path = os.path.join(path, "{}.json".format(name))
         if os.path.isfile(file_path):
             print("file: %s is exist" % file_path)
@@ -58,10 +58,11 @@ class CreateDefFile(BaseApp):
             template = env.get_template("task.json.template")
         else:
             template = env.get_template("workflow.json.template")
-        template.stream(name=name).dump(file_path)
+        template.stream(name=def_name).dump(file_path)
 
 
 class CreateTaskDefFile(CreateDefFile):
+    """Create task definition file form template"""
 
     name = "ct"
     def_type = "task"

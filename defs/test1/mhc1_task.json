@@ -1,0 +1,17 @@
+{
+  "updateTime": 0, 
+  "concurrentExecLimit": 0, 
+  "name": "mhc1",
+  "timeoutSeconds": 0, 
+  "inputKeys": [
+    "inputData"
+  ], 
+  "retryLogic": "FIXED", 
+  "responseTimeoutSeconds": 0, 
+  "retryDelaySeconds": 1, 
+  "retryCount": 10, 
+  "timeoutPolicy": "RETRY", 
+  "outputKeys": [
+  ], 
+  "description": "mhc1"
+}

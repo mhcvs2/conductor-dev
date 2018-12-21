@@ -3,6 +3,7 @@ from oslo_config import cfg
 from cdm.cli.commands import BaseApp
 from cdm.cli.common.client_factory import get_metadata_client
 from cdm.cli.common.register_def import FlowDef
+from cdm.cli.common.utils import *
 
 
 CONF = cfg.CONF
@@ -32,7 +33,12 @@ class RegisterDef(BaseApp):
     @classmethod
     def main(cls):
         client = get_metadata_client()
-        path = CONF.command.path or CONF.register_check_path
+        if not CONF.command.path:
+            path = CONF.register_check_path
+        elif start_with(CONF.command.path, "/"):
+            path = CONF.command.path
+        else:
+            path = os.path.join(CONF.register_check_path, CONF.command.path)
         if not path:
             print("nothing to do")
             return

@@ -38,7 +38,7 @@ class FlowDef(object):
     def register_task(self):
         if not self._client.getTaskDef(self._name):
             print("register task: %s" % self._name)
-            self._client.registerTaskDef(self._data)
+            self._client.registerTaskDefs([self._data])
         else:
             print("task %s is exist, ignore" % self._name)
 

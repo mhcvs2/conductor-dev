@@ -34,7 +34,9 @@ command_opt = cfg.SubCommandOpt('command',
                                 handler=add_command_parsers)
 
 
-def main(argv=None):
+def main():
+    import sys
+    argv = sys.argv
     CONF.register_cli_opt(command_opt)
     CONF.register_opts(common_opts)
     CONF.register_opts(conductor_opts, 'conductor')
@@ -57,5 +59,4 @@ def main(argv=None):
 
 
 if __name__ == '__main__':
-    import sys
-    main(sys.argv)
+    main()
