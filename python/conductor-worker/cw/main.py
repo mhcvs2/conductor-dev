@@ -2,6 +2,7 @@ import os
 from oslo_config import cfg
 from condu import Condu
 from cw.db import get_db_api
+from oslo_utils import importutils
 
 
 CONF = cfg.CONF
@@ -24,7 +25,7 @@ all_workers = ['worker1']
 
 def put_all_tasks(cw):
     for worker in all_workers:
-        worker_module = __import__("cw.worker.{}".format(worker))
+        worker_module = importutils.import_module("cw.worker.{}".format(worker))
         for n, t in worker_module.tasks():
             cw.put_task(n, t)
 
