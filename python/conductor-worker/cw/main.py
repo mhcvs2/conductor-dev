@@ -1,7 +1,6 @@
 import os
 from oslo_config import cfg
 from condu import Condu
-from cw.worker.worker1.mhc1 import *
 from cw.db import get_db_api
 
 
@@ -19,6 +18,15 @@ conductor_opts = [
                help='Conductor server url..'
                ),
 ]
+
+all_workers = ['worker1']
+
+
+def put_all_tasks(cw):
+    for worker in all_workers:
+        worker_module = __import__("cw.worker.{}".format(worker))
+        for n, t in worker_module.tasks():
+            cw.put_task(n, t)
 
 
 def main():
@@ -41,8 +49,7 @@ def main():
     get_db_api().configure_db(options)
 
     cw = Condu(CONF.conductor.server_url)
-    cw.put_task('mhc1', mhc1)
-    cw.put_task('mhc2', mhc2)
+    put_all_tasks(cw)
     print("start tasks: %s" % str(cw.tasks.keys()))
     cw.start_tasks(polling_interval=0.1, processes=5)
 
