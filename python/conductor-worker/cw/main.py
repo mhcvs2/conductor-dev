@@ -2,6 +2,7 @@ import os
 from oslo_config import cfg
 from condu import Condu
 from cw.worker.worker1.mhc1 import *
+from cw.db import get_db_api
 
 
 CONF = cfg.CONF
@@ -32,6 +33,13 @@ def main():
     url = os.environ.get("CONDUCTOR_SERVER_URL")
     if url is not None and url != "":
         CONF.conductor.server_url = url
+
+    options = dict(
+        sql_connection=CONF.database.sql_connection,
+        opts={}
+    )
+    get_db_api().configure_db(options)
+
     cw = Condu(CONF.conductor.server_url)
     cw.put_task('mhc1', mhc1)
     cw.put_task('mhc2', mhc2)

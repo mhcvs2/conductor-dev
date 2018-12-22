@@ -102,26 +102,3 @@ class Queryable(object):
 
 
 db_query = Queryable()
-
-
-def add_options(parser):
-    """Adds any configuration options that the db layer might have.
-
-    :param parser: An optparse.OptionParser object
-    :retval None
-
-    """
-    help_text = ("The following configuration options are specific to the "
-                 "Trove database.")
-
-    group = optparse.OptionGroup(
-        parser,
-        "Registry Database Options",
-        help_text)
-    group.add_option(
-        '--sql-connection',
-        metavar="CONNECTION",
-        default=None,
-        help="A valid SQLAlchemy connection string for the "
-             "registry database. Default: %(default)s.")
-    parser.add_option_group(group)
