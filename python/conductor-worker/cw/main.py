@@ -35,6 +35,7 @@ def main():
     cw = Condu(CONF.conductor.server_url)
     cw.put_task('mhc1', mhc1)
     cw.put_task('mhc2', mhc2)
+    print("start tasks: %s" % cw.tasks.keys().join(" "))
     cw.start_tasks(polling_interval=0.1, processes=5)
 
 
