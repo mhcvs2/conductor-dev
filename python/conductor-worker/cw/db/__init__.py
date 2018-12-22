@@ -1,6 +1,4 @@
-import optparse
-
-from db.sqlalchemy import api as db_api
+from cw.db.sqlalchemy import api as db_api
 
 
 def get_db_api():
