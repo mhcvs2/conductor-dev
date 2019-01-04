@@ -1,4 +1,5 @@
 import inspect
+import json
 from condu.conductor import TaskClient, WorkflowClient
 from cdm.cli.commands import BaseApp
 from cdm.cli.common.client_factory import get_task_client, get_workflow_client
@@ -14,6 +15,7 @@ class ConductorActions(BaseApp):
     task_cmd = ['getTask', 'getTaskQueueSizes', 'getTasksInQueue', 'get_task_logs', 'removeTaskFromQueue']
     workflow_cmd = ['getRunningWorkflows', 'getWorkflow', 'pauseWorkflow', 'rerunWorkflow', 'restartWorkflow',
                     'resumeWorkflow', 'skipTaskFromWorkflow', 'startWorkflow', 'terminateWorkflow']
+    commands = task_cmd + workflow_cmd
 
     @classmethod
     def add_handler(cls, method_name, obj, subparsers):
@@ -45,7 +47,6 @@ class ConductorActions(BaseApp):
         task_client = get_task_client()
         workflow_client = get_workflow_client()
         to_run = CONF.command.name
-        print(to_run)
         if to_run in cls.task_cmd:
             m = getattr(task_client, to_run)
         else:
@@ -56,4 +57,9 @@ class ConductorActions(BaseApp):
         for arg in args.args:
             kwargs[arg] = getattr(CONF.command, arg)
         kw = {k: v for k, v in kwargs.items() if v is not None}
-        m(**kw)
+        res = m(**kw)
+        if res:
+            try:
+                print(json.dumps(res, indent=4))
+            except:
+                print(res)

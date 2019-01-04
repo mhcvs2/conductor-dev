@@ -15,5 +15,4 @@ def get_task_client():
 
 
 def get_workflow_client():
-    print(CONF.conductor.server_url)
     return WorkflowClient(CONF.conductor.server_url)

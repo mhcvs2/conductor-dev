@@ -41,10 +41,16 @@ def main():
     CONF.register_cli_opt(command_opt)
     CONF.register_opts(common_opts)
     CONF.register_opts(conductor_opts, 'conductor')
+    cmds = []
+    for cmd in CMDS:
+        if hasattr(cmd, 'commands'):
+            cmds.extend(getattr(cmd, 'commands'))
+        else:
+            cmds.append(cmd.name)
     CONF(args=argv[1:],
          project='conductor-manager',
          version="0.0.1",
-         usage='%(prog)s [' + '|'.join([cmd.name for cmd in CMDS]) + ']',
+         usage='%(prog)s [' + '|'.join(cmds) + ']',
          default_config_files=["/etc/cm.conf"])
     url = os.environ.get("CONDUCTOR_SERVER_URL")
     if url is not None and url != "":
