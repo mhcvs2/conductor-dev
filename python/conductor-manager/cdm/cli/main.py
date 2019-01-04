@@ -1,13 +1,14 @@
 import os
 from oslo_config import cfg
-from cdm.cli.commands import register_def, create_def
+from cdm.cli.commands import register_def, create_def, conductor_actions
 
 CONF = cfg.CONF
 
 CMDS = [
     register_def.RegisterDef,
     create_def.CreateDefFile,
-    create_def.CreateTaskDefFile
+    create_def.CreateTaskDefFile,
+    conductor_actions.ConductorActions
 ]
 
 common_opts = [
