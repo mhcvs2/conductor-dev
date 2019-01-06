@@ -31,8 +31,9 @@ func Task_1_Execution_Function(t *task.Task) (taskResult *task.TaskResult, err e
 
 	output := map[string]interface{}{"task":"task_1", "name": ""}
 	taskResult.OutputData = output
-	taskResult.Status = "COMPLETED"
+	taskResult.Status = task.COMPLETED
 	err = nil
-
+	taskResult.AppendToLogs("nice")
+	panic("some error panic")
 	return taskResult, err
 }

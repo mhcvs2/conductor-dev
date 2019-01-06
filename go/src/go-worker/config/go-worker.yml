@@ -1,6 +1,6 @@
 
 conductor:
-  server-url: http://tx2:8080/api
+  server-url: http://ali:8080/api
 
 database:
   connection: root:123@tcp(ali:3306)/db_test?charset=utf8

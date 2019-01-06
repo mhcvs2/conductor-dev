@@ -30,7 +30,7 @@ var (
 )
 
 func Init() {
-	viper.SetDefault("conductor.server-url", "http://tx2:8080/api")
+	viper.SetDefault("conductor.server-url", "http://ali:8080/api")
 	viper.SetDefault("conductor.thread-count", 1)
 	viper.SetDefault("database.connection", "root:123@tcp(ali:3306)/db_test?charset=utf8")
 	viper.SetEnvPrefix("go_worker")
