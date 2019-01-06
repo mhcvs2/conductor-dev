@@ -4,6 +4,7 @@ import com.mhc.example.worker1.model.User;
 import com.mhc.example.worker1.service.UserService;
 import com.netflix.conductor.client.worker.Worker;
 import com.netflix.conductor.common.metadata.tasks.Task;
+import com.netflix.conductor.common.metadata.tasks.TaskExecLog;
 import com.netflix.conductor.common.metadata.tasks.TaskResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -29,8 +30,10 @@ public class Worker1 implements Worker {
         userService.addUser(user);
 
         TaskResult result = new TaskResult(task);
+        result.log("work nice");
         result.setStatus(TaskResult.Status.COMPLETED);
-
+        String a = "dsfdf";
+        Long b = Long.parseLong(a);
         //Register the output of the task
         result.getOutputData().put("outputKey1", "value");
         result.getOutputData().put("oddEven", 1);

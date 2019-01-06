@@ -9,7 +9,7 @@ spring:
     druid:
       #监控统计拦截的filters
       filters: stat
-      driver-class-name: com.mysql.jdbc.Driver
+      driver-class-name: com.mysql.cj.jdbc.Driver
       #基本属性
       url: jdbc:mysql://ali:3306/conductor_test?useUnicode=true&characterEncoding=UTF-8&allowMultiQueries=true
       username: root
@@ -38,4 +38,4 @@ mybatis:
 
 
 conductor:
-  serverUrl: http://tx2:8080/api/
+  serverUrl: http://ali:8080/api/
