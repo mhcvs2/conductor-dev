@@ -63,3 +63,5 @@ class ConductorActions(BaseApp):
                 print(json.dumps(res, indent=4))
             except:
                 print(res)
+        else:
+            print("empty reply.")
