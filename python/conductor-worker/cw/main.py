@@ -1,5 +1,4 @@
 from oslo_config import cfg
-from cw.condu.condu import Condu
 from cw.common.cfg import init_config
 from cw.db import get_db_api
 from oslo_utils import importutils
@@ -24,7 +23,7 @@ def main():
         opts={}
     )
     get_db_api().configure_db(options)
-
+    from cw.condu.condu import Condu
     cw = Condu(CONF.conductor.server_url)
     put_all_tasks(cw)
     print("start tasks: %s" % str(cw.tasks.keys()))
