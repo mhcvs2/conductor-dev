@@ -4,3 +4,6 @@ conductor:
 
 database:
   connection: root:123@tcp(ali:3306)/db_test?charset=utf8
+
+log:
+  level: info

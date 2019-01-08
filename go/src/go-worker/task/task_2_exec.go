@@ -14,14 +14,13 @@
 package task
 
 import (
-	"log"
 	"github.com/godatastructure/conductor/task"
 	"go-worker/model"
 )
 
 // Implementation for "task_2"
 func Task_2_Execution_Function(t *task.Task) (taskResult *task.TaskResult, err error) {
-	log.Println("Executing Task_2_Execution_Function for", t.TaskType)
+	LOG.Infof("Executing Task_2_Execution_Function for %s", t.TaskType)
 
 	user := new(model.User)
 	user.Id = 5

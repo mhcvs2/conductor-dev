@@ -14,13 +14,12 @@
 package task
 
 import (
-	"log"
 	"github.com/godatastructure/conductor/task"
 )
 
 // Implementation for "task_1"
 func Task_1_Execution_Function(t *task.Task) (taskResult *task.TaskResult, err error) {
-	log.Println("Executing Task_1_Execution_Function for", t.TaskType)
+	LOG.Infof("Executing Task_1_Execution_Function for %s", t.TaskType)
 
 	//user := new(model.User)
 	//user.Age = 88
