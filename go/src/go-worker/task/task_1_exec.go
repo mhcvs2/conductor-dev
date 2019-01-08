@@ -1,7 +1,7 @@
 package task
 
 import (
-	"go-worker/conductor/task"
+	"github.com/godatastructure/conductor/task"
 )
 
 // Implementation for "task_1"

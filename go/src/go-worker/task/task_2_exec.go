@@ -14,7 +14,7 @@
 package task
 
 import (
-	"go-worker/conductor/task"
+	"github.com/godatastructure/conductor/task"
 	"go-worker/model"
 )
 

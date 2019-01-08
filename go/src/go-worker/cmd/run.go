@@ -2,7 +2,7 @@ package cmd
 
 import (
 	"github.com/spf13/cobra"
-	"go-worker/conductor"
+	"github.com/godatastructure/conductor"
 	"go-worker/config"
 	"go-worker/task"
 )
