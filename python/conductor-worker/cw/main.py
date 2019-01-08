@@ -1,5 +1,5 @@
 from oslo_config import cfg
-from condu import Condu
+from cw.condu.condu import Condu
 from cw.common.cfg import init_config
 from cw.db import get_db_api
 from oslo_utils import importutils
