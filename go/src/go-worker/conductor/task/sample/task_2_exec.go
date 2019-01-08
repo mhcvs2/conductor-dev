@@ -11,25 +11,21 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
-package task
+package sample
 
 import (
+	"log"
 	"go-worker/conductor/task"
-	"go-worker/model"
 )
 
 // Implementation for "task_2"
 func Task_2_Execution_Function(t *task.Task) (taskResult *task.TaskResult, err error) {
-	LOG.Infof("Executing Task_2_Execution_Function for %s", t.TaskType)
+	log.Println("Executing Task_2_Execution_Function for", t.TaskType)
 
-	user := new(model.User)
-	user.Id = 5
-
-	model.DBOrm.Read(user)
 	//Do some logic
 	taskResult = task.NewTaskResult(t)
 
-	output := map[string]interface{}{"task":"task_2", "name":user.Name, "key3":3, "key4":false}
+	output := map[string]interface{}{"task":"task_2", "key2":"value2", "key3":3, "key4":false}
 	taskResult.OutputData = output
 	taskResult.Status = "COMPLETED"
 	err = nil

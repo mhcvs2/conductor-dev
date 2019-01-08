@@ -14,22 +14,23 @@
 package task
 
 import (
-	"go-worker/conductor/task"
-	"go-worker/model"
+	"log"
 )
 
-// Implementation for "task_2"
-func Task_2_Execution_Function(t *task.Task) (taskResult *task.TaskResult, err error) {
-	LOG.Infof("Executing Task_2_Execution_Function for %s", t.TaskType)
+/* Format for functions must be:
+	func Name (t *Task) (taskResult TaskResult, err error)
+ 		- taskResult (TaskResult) should return struct with populated fields
+ 		- err (error) returns error if any
+*/
 
-	user := new(model.User)
-	user.Id = 5
+func ExampleTaskExecutionFunction(t *Task) (taskResult *TaskResult, err error) {
+	log.Println("Executing Example Function for", t.TaskType)
+	log.Println(t)
 
-	model.DBOrm.Read(user)
 	//Do some logic
-	taskResult = task.NewTaskResult(t)
+	taskResult = NewTaskResult(t)
 
-	output := map[string]interface{}{"task":"task_2", "name":user.Name, "key3":3, "key4":false}
+	output := map[string]interface{}{"task":"example", "key2":"value2", "key3":3, "key4":false}
 	taskResult.OutputData = output
 	taskResult.Status = "COMPLETED"
 	err = nil
