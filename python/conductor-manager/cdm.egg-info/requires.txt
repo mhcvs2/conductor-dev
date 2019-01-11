@@ -1,0 +1,7 @@
+pbr>=2.0.0
+urllib3==1.24.1
+requests==2.21.0
+condu==1.0.0b16
+oslo.config==6.7.0
+jinja2==2.10
+twitter.common.dirutil==0.3.9

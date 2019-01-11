@@ -23,7 +23,7 @@ env = build_jinja_environment()
 class CreateDefFile(BaseApp):
     """Create workflow definition file form template"""
 
-    name = "cw"
+    name = "createWorkflowDef"
     def_type = "workflow"
 
     @classmethod
@@ -64,5 +64,5 @@ class CreateDefFile(BaseApp):
 class CreateTaskDefFile(CreateDefFile):
     """Create task definition file form template"""
 
-    name = "ct"
+    name = "createTaskDef"
     def_type = "task"
