@@ -1,0 +1,13 @@
+
+
+*.egg-info
+
+build/
+.eggs/
+
+
+AUTHORS
+ChangeLog
+*.in
+
+*.pyc

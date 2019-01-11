@@ -1,3 +1,0 @@
-[console_scripts]
-conductor-manager = cdm.cli.main:main
-
