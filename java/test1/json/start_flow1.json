@@ -1,0 +1,10 @@
+{
+  "name": "flow1",
+  "version": 1,
+  "correlationId": "my_unique_correlation_id",
+  "input": {
+    "m1": "value1",
+    "m2": "value2"
+  }
+}
+

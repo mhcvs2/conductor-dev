@@ -1,0 +1,53 @@
+{
+  "name": "flow1",
+  "description": "A Simple flow with 2 tasks",
+  "version": 1,
+  "tasks": [
+    {
+      "name": "mhc1",
+      "taskReferenceName": "m1",
+      "inputParameters": {
+        "m1": "workflow.input.m1"
+      },
+      "type": "SIMPLE",
+      "decisionCases": {},
+      "defaultCase": [],
+      "forkTasks": [],
+      "startDelay": 0,
+      "joinOn": [],
+      "optional": false,
+      "defaultExclusiveJoinTask": [],
+      "asyncComplete": false,
+      "loopOver": []
+    },
+    {
+      "name": "mhc2",
+      "taskReferenceName": "m2",
+      "inputParameters": {
+        "m2": "workflow.input.m2"
+      },
+      "type": "SIMPLE",
+      "decisionCases": {},
+      "defaultCase": [],
+      "forkTasks": [],
+      "startDelay": 0,
+      "joinOn": [],
+      "optional": false,
+      "defaultExclusiveJoinTask": [],
+      "asyncComplete": false,
+      "loopOver": []
+    }
+  ],
+  "inputParameters": ["m1", "m2"],
+  "outputParameters": {
+    "r1": "m1.output.r1",
+    "r2": "m2.output.r2"
+  },
+  "schemaVersion": 2,
+  "restartable": true,
+  "workflowStatusListenerEnabled": false,
+  "ownerEmail": "mhc@email.com",
+  "timeoutPolicy": "ALERT_ONLY",
+  "timeoutSeconds": 0,
+  "variables": {}
+}

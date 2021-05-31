@@ -1,0 +1,23 @@
+[
+  {
+    "name": "mhc1",
+    "description": "mhc test 1",
+    "retryCount": 2,
+    "timeoutSeconds": 10,
+    "inputKeys": [
+      "m1"
+    ],
+    "outputKeys": [
+      "r1"
+    ],
+    "timeoutPolicy": "RETRY",
+    "retryLogic": "FIXED",
+    "retryDelaySeconds": 1,
+    "responseTimeoutSeconds": 5,
+    "concurrentExecLimit": 1,
+    "rateLimitPerFrequency": 1,
+    "rateLimitFrequencyInSeconds": 1,
+    "pollTimeoutSeconds": 5,
+    "ownerEmail": "aa@1.com"
+  }
+]
