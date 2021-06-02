@@ -6,7 +6,7 @@ import com.netflix.conductor.common.metadata.tasks.TaskResult;
 
 public class M2Worker implements Worker {
 
-    private String taskDefName = "mhc2";
+    private String taskDefName = "mhc3";
 
     public String getTaskDefName() {
         return taskDefName;

@@ -1,0 +1,13 @@
+
+server:
+  port: 8081
+
+db:
+  type: postgres
+spring:
+  datasource:
+    url: jdbc:postgresql://39.105.162.171:5432/springbootpg
+    username: root
+    password: root.123
+
+
