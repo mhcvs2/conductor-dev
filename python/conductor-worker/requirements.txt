@@ -6,7 +6,7 @@ condu==1.0.0b16
 oslo.config==6.7.0
 
 oslo.i18n==3.22.1
-oslo.utils==3.37.1
+oslo.utils==4.10.1
 sqlalchemy==1.2.14
 oslo.db==4.42.0
 migrate==0.3.8
